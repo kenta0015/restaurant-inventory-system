@@ -289,6 +289,7 @@ setServiceRecords(prev => [...prev, newRecord]);
 
 
   // Provide the context value to child components
+
  return (
   <InventoryContext.Provider value={{
     ingredients,
@@ -305,11 +306,14 @@ setServiceRecords(prev => [...prev, newRecord]);
     addServicePeriod,
     deleteServicePeriod,
     resetDailyTracking,
-    getCurrentPeriod
+    getCurrentPeriod,
+    getLowStockIngredients,
+    getExpiringIngredients
   }}>
     {children}
   </InventoryContext.Provider>
 );
+
 
 /**
  * Custom hook for accessing the inventory context
