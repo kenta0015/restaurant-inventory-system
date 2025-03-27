@@ -41,10 +41,16 @@ const DEFAULT_SERVICE_PERIODS: ServicePeriod[] = [
 export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // State for ingredients with local storage persistence
   // Tracks all ingredient details including stock levels and consumption
-  const [ingredients, setIngredients] = useState<Ingredient[]>(() => {
+ const [ingredients, setIngredients] = useState<Ingredient[]>(() => {
+  try {
     const saved = localStorage.getItem('ingredients');
     return saved ? JSON.parse(saved) : [];
-  });
+  } catch (error) {
+    console.error('Failed to parse ingredients from localStorage:', error);
+    return [];
+  }
+});
+
 
   // Static categories and service periods
   // These remain constant throughout the application lifecycle
@@ -55,17 +61,29 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   // State for dishes with local storage persistence
   // Manages all dish recipes and their current service status
-  const [dishes, setDishes] = useState<Dish[]>(() => {
+ const [dishes, setDishes] = useState<Dish[]>(() => {
+  try {
     const saved = localStorage.getItem('dishes');
     return saved ? JSON.parse(saved) : [];
-  });
+  } catch (error) {
+    console.error('Failed to parse dishes from localStorage:', error);
+    return [];
+  }
+});
+
 
   // State for service records with local storage persistence
   // Tracks all service transactions and revenue data
   const [serviceRecords, setServiceRecords] = useState<ServiceRecord[]>(() => {
+  try {
     const saved = localStorage.getItem('serviceRecords');
     return saved ? JSON.parse(saved) : [];
-  });
+  } catch (error) {
+    console.error('Failed to parse serviceRecords from localStorage:', error);
+    return [];
+  }
+});
+
 
   // Effect hooks for persisting state changes to local storage
   useEffect(() => {
