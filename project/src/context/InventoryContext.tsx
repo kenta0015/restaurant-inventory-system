@@ -49,7 +49,9 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   // Static categories and service periods
   // These remain constant throughout the application lifecycle
   const [categories] = useState<IngredientCategory[]>(DEFAULT_CATEGORIES);
-  const [servicePeriods] = useState<ServicePeriod[]>(DEFAULT_SERVICE_PERIODS);
+  const [servicePeriods, setServicePeriods] = useState<ServicePeriod[]>(DEFAULT_SERVICE_PERIODS);
+
+
 
   // State for dishes with local storage persistence
   // Manages all dish recipes and their current service status
@@ -172,19 +174,19 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     );
 
     // Create service record for revenue tracking
-    const newRecord: ServiceRecord = {
-      id: crypto.randomUUID(),
-      date: new Date().toISOString(),
-      periodId,
-      dishId,
-      quantity: servings,
-      revenue: dish.price * servings,
-      ingredientsUsed: dish.ingredients.map(ing => ({
-        ingredientId: ing.ingredientId,
-        quantity: ing.quantity * servings
-      }))
-    };
-    setServiceRecords(prev => [...prev, newRecord]);
+const newRecord: ServiceRecord = {
+  id: crypto.randomUUID(),
+  date: new Date().toISOString(),
+  periodId,
+  dishId,
+  quantity: servings,
+  revenue: dish.price * servings,
+  ingredientsUsed: (dish.ingredients ?? []).map(ing => ({
+    ingredientId: ing.ingredientId,
+    quantity: ing.quantity * servings
+  }))
+};
+setServiceRecords(prev => [...prev, newRecord]);
 
     // Update ingredient quantities and consumption tracking
     dish.ingredients.forEach(({ ingredientId, quantity }) => {
