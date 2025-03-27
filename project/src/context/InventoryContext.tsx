@@ -259,7 +259,7 @@ setServiceRecords(prev => [...prev, newRecord]);
    * Called at the end of each business day
    * Zeroes out servings count and consumption data
    */
-  const resetDailyTracking = () => {
+    const resetDailyTracking = () => {
     setDishes(prev =>
       prev.map(dish => ({
         ...dish,
@@ -273,6 +273,20 @@ setServiceRecords(prev => [...prev, newRecord]);
       }))
     );
   };
+
+  const getLowStockIngredients = () => {
+    return ingredients.filter((ing) => ing.quantity < 5);
+  };
+
+  const getExpiringIngredients = () => {
+    const today = new Date();
+    return ingredients.filter((ing) => {
+      const expiry = new Date(ing.expiryDate);
+      const diff = (expiry.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
+      return diff <= 3;
+    });
+  };
+
 
   // Provide the context value to child components
  return (
