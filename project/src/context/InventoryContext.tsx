@@ -275,28 +275,27 @@ setServiceRecords(prev => [...prev, newRecord]);
   };
 
   // Provide the context value to child components
-  return (
-    <InventoryContext.Provider value={{
-      ingredients,
-      categories,
-      dishes,
-      servicePeriods,
-      serviceRecords,
-      addIngredient,
-      updateIngredient,
-      deleteIngredient,
-      addDish,
-      updateDishServings,
-      deleteDish,
-      addServicePeriod,
-      deleteServicePeriod,
-      resetDailyTracking,
-      getCurrentPeriod
-    }}>
-      {children}
-    </InventoryContext.Provider>
-  );
-};
+ return (
+  <InventoryContext.Provider value={{
+    ingredients,
+    categories,
+    dishes,
+    servicePeriods,
+    serviceRecords,
+    addIngredient,
+    updateIngredient,
+    deleteIngredient,
+    addDish,
+    updateDishServings,
+    deleteDish,
+    addServicePeriod,
+    deleteServicePeriod,
+    resetDailyTracking,
+    getCurrentPeriod
+  }}>
+    {children}
+  </InventoryContext.Provider>
+);
 
 /**
  * Custom hook for accessing the inventory context
